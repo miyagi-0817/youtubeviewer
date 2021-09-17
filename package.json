@@ -10,8 +10,8 @@
     "build:dev": "webpack --mode development",
     "watch": "npm run build:dev -- --watch",
     "start": "node .",
-    "storybook": "start-storybook -s ./.storybook/static -p 6006", 
-    "build-storybook": "build-storybook -s ./.storybook/static"    
+    "storybook": "start-storybook -s ./.storybook/static -p 6006",
+    "build-storybook": "build-storybook -s ./.storybook/static"
   },
   "author": "",
   "license": "ISC",
@@ -30,8 +30,10 @@
     "babel-plugin-styled-components": "^1.10.7"
   },
   "dependencies": {
+    "axios": "^0.21.4",
     "core-js": "^3.6.4",
     "express": "^4.17.1",
+    "googleapis": "^87.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
