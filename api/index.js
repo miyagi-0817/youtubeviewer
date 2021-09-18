@@ -10,15 +10,28 @@ const youtube = google.youtube({
 });
 
 const router = express.Router();
+// 動画詳細情報取得
+router.get('/videos/:videoId', (req, res, next) => {
+  const { videoId } = req.params;
+  (async () => {
+    // 動画の情報を取得
+    const { data: { items } } = await youtube.videos.list({
+      part: 'statistics,snippet',
+      id: videoId,
+    });
+    res.json(items[0]);
+  })().catch(next);
+});
 
-router.get('/videos/search/:keyword', (req, res, next) => {
-  const { keyword } = req.params;
+// 関連動画取得
+router.get('/videos/:videoId/related', (req, res, next) => {
+  const { videoId: relatedToVideoId } = req.params;
   const { pageToken } = req.query;
   (async () => {
-    // 検索結果を動画IDで取得
+    // 関連動画のIDを取得
     const { data: { items: idItems, nextPageToken } } = await youtube.search.list({
       part: 'id',
-      q: keyword,
+      relatedToVideoId,
       type: 'video',
       maxResults: 20,
       pageToken,
@@ -31,7 +44,6 @@ router.get('/videos/search/:keyword', (req, res, next) => {
     });
     res.json({ items, nextPageToken });
   })().catch(next);
-
 });
 
 module.exports = router;
